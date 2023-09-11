@@ -9,7 +9,7 @@ pipeline {
                     def dockerImage = "your-docker-registry/your-web-app:${BUILD_NUMBER}"
 
                     // Build the Docker image
-                    sh "docker build -t ${dockerImage} ."
+                    bat "docker build -t ${dockerImage} ."
                 }
             }
         }
@@ -21,10 +21,10 @@ pipeline {
                     def dockerImage = "your-docker-registry/your-web-app:${BUILD_NUMBER}"
 
                     // Log in to Docker registry (if needed)
-                    // sh "docker login -u your-username -p your-password"
+                    // bat "docker login -u your-username -p your-password"
 
                     // Push the Docker image to the registry
-                    sh "docker push ${dockerImage}"
+                    bat "docker push ${dockerImage}"
                 }
             }
         }
@@ -36,12 +36,11 @@ pipeline {
                     def dockerImage = "your-docker-registry/your-web-app:${BUILD_NUMBER}"
 
                     // SSH into your server and run the Docker container
-                    sshagent(['your-ssh-credentials']) {
-                        sh """
-                            ssh user@your-server-address 'docker pull ${dockerImage}'
-                            ssh user@your-server-address 'docker run -d -p 80:80 ${dockerImage}'
-                        """
-                    }
+                    // Replace 'user' and 'your-server-address' with your server details
+                    bat """
+                        ssh user@your-server-address "docker pull ${dockerImage}"
+                        ssh user@your-server-address "docker run -d -p 80:80 ${dockerImage}"
+                    """
                 }
             }
         }
